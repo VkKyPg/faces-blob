@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> {{category_id}} </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+  <script src="../javascript/script.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div class="topbar">
+    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>
+    <a href = "{{user_logout}}"><div id="logout" class="navitem"> Log Out  </div></a>
+
+    <a href="/about"><div id="tutorial" class="navitem">About</div></a>
+  </div>
+
+  <div id="addPerson" class="add">Add Person </div>
+
+<div id="personForm">
+
+    <form action ='{{upload_url}}' enctype= 'multipart/form-data' method = 'POST'>
+        <div>
+          <h2> Add New Person </h2>
+
+            <div> Name <input type = 'text' name = 'name_person' class="textbox"> </div>
+            <div> Image URL <input type = 'file' name = 'file' class="textbox"> </div>
+            <div> Optional Info <input type = 'text' name = 'paragraph' class="textbox"> </div>
+
+          </div>
+
+
+          <div id="buttons">
+            <input class="button" type="submit" value="Create" id="buttonbutton">
+            <input type="hidden" name="category_id" value="{{category_id}}">
+            <div class="button" id="exit">x</div>
+          </div>
+
+        </div>
+    </form>
+  </div>
+
+
+
+
+  <div class="restofpage" id="tilecontainer">
+    <ul>
+      {% for person in people %}
+        {% if person.category_id == category_id %}
+        <li class="tile">
+          <div class="personName">{{person.name_person}}</div>
+          <img src= '/view_photo/{{person.image}}' class="personurl"></img>
+          <div class="personParagraph">{{person.paragraph}}</div>
+
+
+
+
+          <form action = "/delete_person" method = "POST">
+            <input type="hidden" name= 'ppl_id' value = "{{person.key.id()}}">
+            <input type="submit" value="Delete" class="deletebutton">
+          </form>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+
+  </div>
+
+</body>
+</html>

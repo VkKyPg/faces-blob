@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Faces home</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="../stylesheets/style.css">
+  <script src="../javascript/script.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div class="topbar">
+    <a href="/home"><div id="gohome" class="navitem">Faces</div></a>
+    <a href = "{{user_logout}}"><div id="logout" class="navitem"> Log Out  </div></a>
+    <a href="/about"><div id="tutorial" class="navitem">About</div></a>
+  </div>
+
+
+    <div id="addCategory" class="add">Add Category </div>
+
+    <div id="categoryForm">
+        <form action="/add_category" method='POST'>
+          <div>
+            <h2>Name your category</h2>
+            <input type="text" name="category_Name" class="textbox">
+
+
+              <div id="buttons">
+                    <input class = "button" type = "submit" value = "create" id="buttonbutton">
+                  <div class="button" id="exit">x</div>
+              </div>
+          </div>
+        </form>
+    </div>
+
+<div class="restofpage">
+
+
+  <ul>
+    {% for category in categories %}
+      {% if category.user_id == user_id %}
+
+          <a href= "/add_person?category_id={{category_keys[loop.index0]}}">
+            <li class="listedCategories">
+            {{category.category_Name}}
+
+            <form action = "/delete_category" method = "POST">
+              <input type="hidden" name= 'keyid' value = "{{category_keys[loop.index0]}}">
+              <input type="submit" value="Delete" class="deletebutton">
+            </form>
+          </li>
+          </a>
+
+
+      {% endif %}
+    {% endfor %}
+
+  </ul>
+
+
+</div>
+</body>
+
+</html>
